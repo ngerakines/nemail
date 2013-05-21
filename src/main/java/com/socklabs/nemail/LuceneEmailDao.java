@@ -154,7 +154,6 @@ public class LuceneEmailDao implements EmailDao {
 			for (final ScoreDoc hit : hits) {
 				final int docId = hit.doc;
 				final Document d = searcher.doc(docId);
-				LOGGER.info("doc {}", d);
 				final String messageId = d.get("id");
 				emails.add(messageId);
 			}

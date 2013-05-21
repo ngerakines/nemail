@@ -1,6 +1,5 @@
 package com.socklabs.nemail;
 
-import org.subethamail.smtp.TooMuchDataException;
 import org.subethamail.smtp.helper.SimpleMessageListener;
 
 import javax.mail.MessagingException;
@@ -10,7 +9,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 /**
- * An SMTPD listener that attempts to publish received emails to the event bus.
+ * An SMTPD listener that attempts to store received emails with the email dao.
  */
 public class DefaultSimpleMessageListener implements SimpleMessageListener {
 

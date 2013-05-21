@@ -49,11 +49,6 @@ public class BeanConfig extends WebMvcConfigurerAdapter {
 		return vr;
 	}
 
-	@Bean(name = "nemail-eventBus")
-	public EventBus eventBus() {
-		return new EventBus();
-	}
-
 	/* @Bean(name = "nemail-simpleEmailDao")
 	public EmailDao simpleEmailDao() {
 		return new SimpleEmailDao();
