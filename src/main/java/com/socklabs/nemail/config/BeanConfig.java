@@ -3,6 +3,7 @@ package com.socklabs.nemail.config;
 import com.google.common.eventbus.EventBus;
 import com.socklabs.nemail.DefaultSimpleMessageListener;
 import com.socklabs.nemail.EmailDao;
+import com.socklabs.nemail.LuceneEmailDao;
 import com.socklabs.nemail.SimpleEmailDao;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -53,9 +54,14 @@ public class BeanConfig extends WebMvcConfigurerAdapter {
 		return new EventBus();
 	}
 
-	@Bean(name = "nemail-simpleEmailDao")
+	/* @Bean(name = "nemail-simpleEmailDao")
 	public EmailDao simpleEmailDao() {
 		return new SimpleEmailDao();
+	} */
+
+	@Bean(name = "nemail-luceneEmailDao")
+	public EmailDao luceneEmailDao() {
+		return new LuceneEmailDao();
 	}
 
 	@Bean(name = "nemail-smtpServer")
@@ -70,7 +76,7 @@ public class BeanConfig extends WebMvcConfigurerAdapter {
 
 	@Bean(name = "nemail-simpleMessageListener")
 	public SimpleMessageListener simpleMessageListener() {
-		return new DefaultSimpleMessageListener(simpleEmailDao());
+		return new DefaultSimpleMessageListener(luceneEmailDao());
 	}
 
 }
