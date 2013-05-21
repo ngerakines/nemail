@@ -3,8 +3,11 @@ package com.socklabs.nemail;
 import com.google.common.base.Optional;
 
 import java.util.List;
-import java.util.Map;
 
+/**
+ * An interface that defines a standard set of email dao actions.
+ */
+// TODO[NKG]: Add support for multi-value lookup (ie search by to AND subject).
 public interface EmailDao {
 
 	void store(final Email email);

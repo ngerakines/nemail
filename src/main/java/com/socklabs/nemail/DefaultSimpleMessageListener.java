@@ -9,6 +9,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+/**
+ * An SMTPD listener that attempts to publish received emails to the event bus.
+ */
 public class DefaultSimpleMessageListener implements SimpleMessageListener {
 
 	private final EmailDao emailDao;
@@ -23,13 +26,14 @@ public class DefaultSimpleMessageListener implements SimpleMessageListener {
 	}
 
 	@Override
-	public void deliver(String from, String recipient, InputStream data) throws TooMuchDataException, IOException {
+	public void deliver(String from, String recipient, InputStream data) throws IOException {
 		final String rawMessage = convertStreamToString(data);
 		final Email email;
 		try {
 			email = new Email(rawMessage);
 			emailDao.store(email);
 		} catch (MessagingException e) {
+			// TODO[NKG]: Clean this up.
 			e.printStackTrace();
 		}
 	}
@@ -43,6 +47,7 @@ public class DefaultSimpleMessageListener implements SimpleMessageListener {
 				sb.append(line + "\n");
 			}
 		} catch (IOException e) {
+			// TODO[NKG]: Clean this up.
 			e.printStackTrace();
 		}
 		return sb.toString();

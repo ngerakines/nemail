@@ -49,7 +49,7 @@ public class BeanConfig extends WebMvcConfigurerAdapter {
 		return vr;
 	}
 
-	@Bean(name = "RandomReviews-eventBus")
+	@Bean(name = "nemail-eventBus")
 	public EventBus eventBus() {
 		return new EventBus();
 	}

@@ -19,7 +19,7 @@ import javax.annotation.Resource;
 		})
 public class AppConfig {
 
-	@Resource
+	@Resource(name = "nemail-smtpServer")
 	private SMTPServer smtpServer;
 
 	@PostConstruct

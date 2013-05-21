@@ -7,6 +7,9 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
+/**
+ * A small java class that composes and sends a test email.
+ */
 public class EmailTest {
 	public static void main(String[] args) throws Exception {
 		Properties props = new Properties();

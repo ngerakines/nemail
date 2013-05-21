@@ -4,6 +4,9 @@ import com.google.common.base.Optional;
 
 import java.util.*;
 
+/**
+ * A basic email dao impl that keeps emails in memory via a hash set.
+ */
 public class SimpleEmailDao implements EmailDao {
 
 	private final Set<Email> emails = new HashSet<Email>();

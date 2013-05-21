@@ -25,6 +25,11 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+/**
+ * An email dao implementation that creates a lucene index for received emails. Additionally, guava cache is used
+ * to keep up to 1000 elements for up to 12 hours.
+ */
+// TODO[NKG]: Verify this locking is needed, it may not be.
 public class LuceneEmailDao implements EmailDao {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(LuceneEmailDao.class);
@@ -41,8 +46,10 @@ public class LuceneEmailDao implements EmailDao {
 		config = new IndexWriterConfig(Version.LUCENE_43, analyzer);
 
 		emailCache  = CacheBuilder.newBuilder()
+				// TODO[NKG]: Make this max size configurable.
 				.maximumSize(1000)
-				.expireAfterWrite(10, TimeUnit.MINUTES)
+				// TODO[NKG]: Make this expire after value configurable.
+				.expireAfterWrite(12, TimeUnit.HOURS)
 				.removalListener(new RemovalListener<String, Email>() {
 					@Override
 					public void onRemoval(final RemovalNotification<String, Email> stringLongRemovalNotification) {
@@ -52,6 +59,7 @@ public class LuceneEmailDao implements EmailDao {
 							indexWriter.deleteDocuments(new Term("id", stringLongRemovalNotification.getKey()));
 							indexWriter.close();
 						} catch (IOException e) {
+							// TODO[NKG]: Clean this up.
 							LOGGER.error("Ooops", e);
 						} finally {
 							lock.writeLock().unlock();
@@ -66,6 +74,7 @@ public class LuceneEmailDao implements EmailDao {
 		emailCache.put(email.getMessageId(), email);
 
 		recentEmails.add(email.getMessageId());
+		// TODO[NKG]: Make this recent email size configurable.
 		if (recentEmails.size() > 100) {
 			recentEmails.remove(0);
 		}
@@ -85,6 +94,7 @@ public class LuceneEmailDao implements EmailDao {
 			indexWriter.addDocument(doc);
 			indexWriter.close();
 		} catch (final IOException e) {
+			// TODO[NKG]: Clean this up.
 			LOGGER.error("Ooops", e);
 		} finally {
 			lock.writeLock().unlock();
@@ -151,6 +161,7 @@ public class LuceneEmailDao implements EmailDao {
 
 			reader.close();
 		} catch (final IOException e) {
+			// TODO[NKG]: Clean this up.
 			LOGGER.error("oops", e);
 		}
 		return collectEmails(emails);

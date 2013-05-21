@@ -11,6 +11,9 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.*;
 
+/**
+ * A representation of an email received by the application.
+ */
 public class Email {
 	private final String messageId;
 	private final List<String> tos;

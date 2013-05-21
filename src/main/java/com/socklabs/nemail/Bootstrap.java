@@ -3,7 +3,6 @@ package com.socklabs.nemail;
 import com.netflix.config.*;
 import com.socklabs.nemail.config.AppConfig;
 import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.configuration.SystemConfiguration;
 import org.apache.commons.daemon.Daemon;
 import org.apache.commons.daemon.DaemonContext;
